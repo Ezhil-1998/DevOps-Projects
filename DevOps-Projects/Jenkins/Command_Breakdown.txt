@@ -1,0 +1,39 @@
+
+curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+
+###
+
+curl: A command-line tool for transferring data.
+-f: Fail silently on server errors.
+-s: Silent mode (no progress or error messages).
+-S: Show error messages when -s is used.
+-L: Follow redirects.
+https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key: The URL of the Jenkins GPG key.
+|: Pipes the output of the curl command to the next command.
+sudo: Runs the command with superuser privileges.
+tee: Writes the input it receives to the specified file and outputs it to the terminal.
+/usr/share/keyrings/jenkins-keyring.asc: The file where the key will be stored.
+> /dev/null: Discards the output from tee, so it doesn’t clutter the terminal. If this command not used, 
+             the content that is written to the file in the terminal is displayed.
+
+
+Purpose
+This command effectively downloads the Jenkins GPG key and saves it to the specified keyring file, 
+allowing your system to verify the authenticity of packages from the Jenkins repository when you later add that repository and install Jenkins.
+
+###
+
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] http://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list
+
+###
+
+echo: Outputs the string that follows.
+deb: Indicates that this is a Debian package repository.
+[signed-by=/usr/share/keyrings/jenkins-keyring.asc]: Specifies the path to the GPG key for verifying packages from this repository.
+https://pkg.jenkins.io/debian-stable binary/: The URL of the Jenkins package repository.
+/etc/apt/sources.list.d/jenkins.list: The file where the Jenkins repository configuration will be saved.
+
+Purpose
+This command effectively adds the Jenkins package repository to your system, allowing you to install and update Jenkins using your package manager.
+
+###
